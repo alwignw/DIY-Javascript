@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // Mendaftarkan pengunduhan di latar belakang
+    navigator.serviceWorker.ready
+        .then(registration => {
+            const options = {
+                title: 'Pengunduhan di Latar Belakang',
+                icons: [{ sizes: '192x192', src: 'icon.png', type: 'image/png' }],
+                downloadTotal: 1024 * 1024, // Batas waktu pengunduhan dalam byte (1 MB)
+                downloadMax: 2 // Jumlah maksimum pengunduhan yang dapat dilakukan
+            };
+
+            return registration.backgroundFetch.fetch('https://example.com/data.json', options);
+        })
+        .then(fetchRegistration => {
+            console.log('Pengunduhan di latar belakang berhasil didaftarkan');
+
+            // Menangani hasil pengunduhan yang berhasil
+            fetchRegistration.addEventListener('backgroundfetchsuccess', event => {
+                const { downloadId, result } = event;
+                const response = result.response;
+
+                console.log('Pengunduhan di latar belakang berhasil:', downloadId);
+                console.log('Status:', response.status);
+                console.log('Konten:', response.text());
+            });
+
+            // Menangani hasil pengunduhan yang gagal
+            fetchRegistration.addEventListener('backgroundfetchfail', event => {
+                const { downloadId, result } = event;
+                const error = result.error;
+
+                console.error('Pengunduhan di latar belakang gagal:', downloadId);
+                console.error('Kesalahan:', error);
+            });
+        })
+        .catch(error => {
+            console.error('Gagal mendaftarkan pengunduhan di latar belakang:', error);
+        });
+
+</script>
+
+</html>
+
+<!-- 
+Dalam contoh di atas, kita menggunakan navigator.serviceWorker.ready untuk mendapatkan akses ke Service Worker yang terdaftar.
+Kemudian, kita menggunakan metode registration.backgroundFetch.fetch() untuk membuat pengunduhan di latar belakang dengan 
+URL target https://example.com/data.json.
+
+Setelah pengunduhan di latar belakang berhasil didaftarkan, 
+kita menangani hasil pengunduhan menggunakan EventListener backgroundfetchsuccess dan backgroundfetchfail. 
+Di dalam EventListener tersebut, kita dapat mengakses respons pengunduhan yang berhasil atau kesalahan yang terjadi.
+
+Penting untuk dicatat bahwa penggunaan Background Fetch API membutuhkan dukungan Service Worker di aplikasi web. 
+Service Worker harus terdaftar dan terhubung dengan halaman web untuk dapat menggunakan Background Fetch API. -->

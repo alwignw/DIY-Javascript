@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+</head>
+<body>
+    <button id="say">hai</button>
+</body>
+<script type="module" >
+    import {nama} from "./script/module.js"
+    import {Person} from "./script/person.js"
+    import {a , Cname , Fname} from "./script/multiExport.js"
+    import {balias, c as calias} from "./script/alias.js"
+    import testVar , {caca} from "./script/exportDefault.js"
+    import * as mObject from "./script/moduleObject.js"
+    import {a as aAggregate} from "./script/aggregate.js"
+
+
+    const person = new Person("alwi");
+    person.sayHello();
+    console.log(nama)
+
+    console.log(a)
+    console.log(Fname())
+    const fname = new Cname("alwi");
+    fname.say();
+
+   
+    console.log(balias , calias)
+    console.log(testVar)
+    console.log(caca)
+
+    console.log(mObject.aa)
+    mObject.ab()
+    const ac = new mObject.ac();
+    ac.say();   
+
+    // console.log(TestAggregate)
+    console.log(aAggregate)
+
+    document.getElementById("say").onclick =  () => {
+        import("./script/alert.js").then(res=>{
+            res.alertSay();
+        })
+    }
+
+
+</script>
+</html>

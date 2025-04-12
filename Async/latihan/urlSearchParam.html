@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="searchs">
+    <button id="search">search</button>
+</body>
+<script>
+
+    function onSearch(){
+
+        const ajax = new XMLHttpRequest();
+        const urlParam = new  URLSearchParams();
+       
+        urlParam.append("search" , document.getElementById("searchs").value);
+
+        ajax.open('POST' , `https://eoa6t4hxmohwgo3.m.pipedream.net?${urlParam.toString()}`)
+        ajax.setRequestHeader('Content-Type', 'application/json');
+        ajax.send();
+        ajax.onload = (res) =>{
+            const {target : { responseText = {} , status }} = res;
+            console.log(responseText)
+        }
+
+    }
+
+    document.getElementById('search').onclick =  onSearch
+
+</script>
+</html>

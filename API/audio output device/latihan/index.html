@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+    // Mendapatkan daftar perangkat audio yang tersedia
+    navigator.mediaDevices.enumerateDevices()
+        .then(devices => {
+            // Memfilter perangkat untuk mendapatkan perangkat output audio
+            const audioOutputDevices = devices.filter(device => device.kind === 'audiooutput');
+
+            // Menampilkan daftar perangkat output audio
+            audioOutputDevices.forEach(device => {
+                console.log('Nama Perangkat:', device.label);
+                console.log('ID Perangkat:', device.deviceId);
+                console.log('Tipe Perangkat:', device.kind);
+                console.log('====================');
+            });
+
+            // Mengubah perangkat output audio saat ini
+            const selectedDeviceId = audioOutputDevices[0].deviceId; // Mengambil ID perangkat pertama
+            const audioElement = document.getElementById('my-audio-element');
+            audioElement.setSinkId(selectedDeviceId)
+                .then(() => {
+                    console.log('Perangkat output audio berhasil diubah');
+                })
+                .catch(error => {
+                    console.error('Gagal mengubah perangkat output audio:', error);
+                });
+
+            // Mengontrol volume perangkat output audio
+            audioElement.volume = 0.7; // Mengatur volume menjadi 70%
+        })
+        .catch(error => {
+            console.error('Gagal mendapatkan daftar perangkat audio:', error);
+        });
+
+
+</script>
+
+</html>

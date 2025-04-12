@@ -1,0 +1,13 @@
+
+
+const num = 17
+if (num < 2) return false;
+
+for (let i = 2; i <= Math.sqrt(num); i++) {
+  if (num % i === 0) {
+    console.log(false)
+    return
+  }
+}
+
+console.log(true)

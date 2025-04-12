@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="file" id="file">
+    <button id="submit">submit</button>
+
+</body>
+<script>
+
+    function onsend(){
+        const ajax = new XMLHttpRequest();
+        ajax.open('post' , 'https://eoa6t4hxmohwgo3.m.pipedream.ne')
+
+        const formData = new FormData();
+        formData.append('file' , document.getElementById('file').files.item(0))
+        // ajax.setRequestHeader('Content-Type', 'multipart/form-data');
+        ajax.send(formData);
+
+        ajax.onload = (res) =>{
+            const {target: {responseText}} = res
+            console.log(responseText)
+        }
+
+    }
+
+    document.getElementById('submit').onclick = onsend
+
+</script>
+</html>

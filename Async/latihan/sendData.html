@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="freeText">
+    <button id="send">kirim</button>
+</body>
+<script>
+
+    function send() {
+        const reqxml = new XMLHttpRequest();
+        reqxml.open('POST', 'https://eoa6t4hxmohwgo3.m.pipedream.net')
+        reqxml.setRequestHeader('Content-Type', 'application/json');
+        reqxml.send(JSON.stringify({
+            test :  document.getElementById('freeText')
+        }))
+        
+        reqxml.onload = (res) =>{
+            const {target : { responseText = {} , status }} = res;
+            console.log(responseText)
+        }
+
+    }
+
+    document.getElementById('send').onclick =  send;
+
+</script>
+
+</html>
